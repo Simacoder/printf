@@ -1,56 +1,65 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stdio.h>
+
+void print_buffer(char buffer[], int *buff_ind);
 
 /**
  * _printf - function that produces output according to a format
  * @format: parameter member
- * Return: counter succes
+ *
+ * Return: printed char
  */
-
 int _printf(const char *format, ...)
 {
-	int count, i = 0;
+	int i, count = 0, counted_char = 0;
+	int flags, witdth, presicion, size, buff_ind = 0;
 	va_list info;
+	char buffer[BUFF_SIZE];
+
+	if (format == NULL)
+		return (-1);
 
 	va_start(info, format);
-
-	for (i = 0; format[i] != '\0'; )
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
 		if (format[i] != '%')
 		{
-			count = count + _putchar(format[i]);
-			i++;
+			buffer[buff_ind++] = format[i];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			counted_char++;
 		}
-		else if (format[i] == '%' && format[i + 1] != ' ')
+		else
 		{
-			switch (format[i + 1])
-			{
-				case 'c':
-					count += _putchar(va_arg(info, int));
-					break;
-				case 's':
-					count += print_string(va_arg(info, int));
-					break;
-				case '%':
-					count += _putchar('%');
-					break;
-				case 'd':
-					count += print_decimal(va_arg(info, int));
-					break;
-				case 'i':
-					count += print_decima(va_arg(info, int));
-					break;
-				default:
-					break;
-			}
-
-			i += 2;
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, info);
+			precision = get_precision(format, &i, info);
+			size = get_size(format, &i);
+			++i;
+			counted handle_print(format,&i,info, buffer,
+					flags, width, precision, size);
+			if (counted == -1)
+				return (-1);
+			counted_char += counted;
 		}
 	}
-<<<<<<< HEAD
-	return (count);
-=======
+
+	print_buffer(buffer, &buff_ind);
+
 	va_end(info);
->>>>>>> c9c5402130c7a8d06198720d7f514e43b81c69a0
+
+	return (counted_char);
+}
+
+/**
+ * print_buffer - prints the contents of thebuffer if it exist
+ * @buffer: array of chars
+ * @buf_ind: index at which to add next char
+ */
+void print_biffer(char buffer[], int *buff_ind)
+{
+	if (*buff_ind > 0)
+		write(1, &buffer[0], *buff_ind);
+
+	*buff_ind = 0;
 }
