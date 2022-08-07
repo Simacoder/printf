@@ -15,9 +15,38 @@ int _printf(const char *format, ...)
 
 	va_start(info, format);
 
-	for (i = 0; format[i] != '%' && format[i] != '\0'; i++)
+	for (i = 0; format[i] != '\0'; )
 	{
-		count += _putchar(format[i]);
-		return (count);
+		if (format[i] != '%')
+		{
+			count = count + _putchar(format[i]);
+			i++;
+		}
+		else if (format[i] == '%' && format[i + 1] != ' ')
+		{
+			switch (format[i + 1])
+			{
+				case 'c':
+					count += _putchar(va_arg(info, int));
+					break;
+				case 's':
+					count += print_string(va_arg(info, int));
+					break;
+				case '%':
+					count += _putchar('%');
+					break;
+				case 'd':
+					count += print_decimal(va_arg(info, int));
+					break;
+				case 'i':
+					count += print_decima(va_arg(info, int));
+					break;
+				default:
+					break;
+			}
+
+			i += 2;
+		}
 	}
+	return (count);
 }
