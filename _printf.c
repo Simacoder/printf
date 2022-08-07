@@ -48,5 +48,9 @@ int _printf(const char *format, ...)
 			i += 2;
 		}
 	}
+<<<<<<< HEAD
 	return (count);
+=======
+	va_end(info);
+>>>>>>> c9c5402130c7a8d06198720d7f514e43b81c69a0
 }
