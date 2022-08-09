@@ -194,8 +194,8 @@ int write_pointer(char buffer[], int ind, int length,
 
 	if (width > length)
 	{
-		for (i = 3; i < width - lenth + 3; i++)
-			bufer[i] = padd;
+		for (i = 3; i < width - length + 3; i++)
+			buffer[i] = padd;
 		buffer[i] = '\0';
 		if (flags & F_MINUS && padd == ' ')
 		{
@@ -222,7 +222,7 @@ int write_pointer(char buffer[], int ind, int length,
 			buffer[1] = '0';
 			buffer[2] = 'x';
 			return (write(1, &buffer[padd_start], i - padd_start) +
-					wriite(1, &buffer[ind], length - (1 - padd_start) - 2));
+					write(1, &buffer[ind], length - (1 - padd_start) - 2));
 		}
 	}
 	buffer[--ind] = 'x';

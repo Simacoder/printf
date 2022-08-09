@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdarg.h>
 
 void print_buffer(char buffer[], int *buff_ind);
 
@@ -67,6 +68,7 @@ int _printf(const char *format, ...)
  * @buffer: array of chars
  * @buff_ind: index at which to add next char
  */
+
 void print_buffer(char buffer[], int *buff_ind)
 {
 	if (*buff_ind > 0)
