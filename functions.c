@@ -70,7 +70,7 @@ int print_string(v_list types, char buffer[],
 		}
 	}
 
-	return (write(1, str. len));
+	return (write(1, str, len));
 }
 
 /**
