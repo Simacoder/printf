@@ -10,7 +10,7 @@ void print_buffer(char buffer[], int *buff_ind);
  */
 int _printf(const char *format, ...)
 {
-	int i, count = 0, counted_char = 0;
+	int i, printed = 0, printed_chars = 0;
 	int flags, witdth, presicion, size, buff_ind = 0;
 	va_list info;
 	char buffer[BUFF_SIZE];
@@ -19,9 +19,6 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(info, format);
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	char buffer[BUFF_SIZE];
 	va_list list;
 
 	if (format == NULL)
@@ -35,7 +32,7 @@ int _printf(const char *format, ...)
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
 
-			counted_char++;
+			printed_chars++;
 
 		/* write(1, &format[i], 1);*/
 			printed_chars++;
@@ -48,11 +45,11 @@ int _printf(const char *format, ...)
 			precision = get_precision(format, &i, info);
 			size = get_size(format, &i);
 			++i;
-			counted handle_print(format, &i, info, buffer,
+			printed = handle_print(format, &i, info, buffer,
 					flags, width, precision, size);
-			if (counted == -1)
+			if (printed == -1)
 				return (-1);
-			counted_char += counted;
+			printed_chars += printed;
 		}
 	}
 
@@ -60,35 +57,9 @@ int _printf(const char *format, ...)
 
 	va_end(info);
 
-	return (counted_char);
+	return (printed_chars);
 }
 
-/**
- * print_buffer - prints the contents of thebuffer if it exist
- * @buffer: array of chars
- * @buff_ind: index at which to add next char
- */
-
-void print_buffer(char buffer[], int *buff_ind)
-{
-	if (*buff_ind > 0)
-	{
-		write(1, &buffer[0], *buff_ind);
-		width = get_width(format, &i, list);
-		precision = get_precision(format, &i, list);
-		size = get_size(format, &i);
-		++i;
-		printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-		if (printed == -1)
-			return (-1);
-		printed_chars += printed;
-	}
-}
-print_buffer(buffer, &buff_ind);
-va_end(list);
-return (printed_chars);
-}
 /**
  * print_buffer - Prints the contents of the buffer if it exist
  * @buffer: Array of chars
